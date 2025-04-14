@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { postData } from "@/services/api-service";
+import GoogleSignIn from "@/components/auth/GoogleSignIn";
 
 export default function Home() {
   const [text, setText] = useState('');
@@ -40,6 +41,8 @@ export default function Home() {
           {confirmationMessage}
         </div>
       )}
+      <GoogleSignIn />
     </div>
   );
 }
+
