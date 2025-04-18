@@ -1,15 +1,28 @@
-
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { postData } from "@/services/api-service";
 import GoogleSignIn from "@/components/auth/GoogleSignIn";
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { getAuth } from 'firebase/auth';
+import { firebaseApp } from '@/firebase/config';
 
 export default function Home() {
   const [text, setText] = useState('');
   const [confirmationMessage, setConfirmationMessage] = useState('');
+  const [user] = useAuthState(getAuth(firebaseApp));
+  const [firstName, setFirstName] = useState('');
+
+  useEffect(() => {
+    if (user && user.displayName) {
+      const nameParts = user.displayName.split(' ');
+      setFirstName(nameParts[0]);
+    } else {
+      setFirstName('');
+    }
+  }, [user]);
 
   const handleSubmit = async () => {
     try {
@@ -28,6 +41,11 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <h1 className="text-2xl font-bold mb-4">PostAuth App</h1>
+      {user ? (
+        <p className="mb-4">Welcome, {firstName}!</p>
+      ) : (
+        <GoogleSignIn />
+      )}
       <Input
         type="text"
         placeholder="Enter text"
@@ -41,7 +59,6 @@ export default function Home() {
           {confirmationMessage}
         </div>
       )}
-      <GoogleSignIn />
     </div>
   );
 }
