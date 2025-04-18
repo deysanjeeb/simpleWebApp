@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import {initializeApp, FirebaseApp, getApp} from "firebase/app";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -15,13 +15,12 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-let firebaseApp;
+let firebaseApp: FirebaseApp;
 
 try {
+  firebaseApp = getApp();
+} catch (e: any) {
   firebaseApp = initializeApp(firebaseConfig);
-} catch (error: any) {
-  console.error("Firebase initialization error:", error.message);
-  throw new Error("Firebase configuration is invalid. Check your environment variables.");
 }
 
 export { firebaseApp };
