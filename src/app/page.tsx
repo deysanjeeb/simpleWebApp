@@ -40,12 +40,15 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
+       <div className="absolute top-4 right-4">
+        {user ? (
+          <p className="mb-4">Welcome, {firstName}!</p>
+        ) : (
+          <GoogleSignIn />
+        )}
+      </div>
       <h1 className="text-2xl font-bold mb-4">PostAuth App</h1>
-      {user ? (
-        <p className="mb-4">Welcome, {firstName}!</p>
-      ) : (
-        <GoogleSignIn />
-      )}
+
       <Input
         type="text"
         placeholder="Enter text"
@@ -62,4 +65,3 @@ export default function Home() {
     </div>
   );
 }
-
